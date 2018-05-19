@@ -28,5 +28,6 @@ private:
 
 	// Moves the barel of the tank towards the crosshair
 	void AimTowardsCrosshair();
+	bool GetSightRayHitLocation(FVector & OutHitLocation) const;
 	
 };
