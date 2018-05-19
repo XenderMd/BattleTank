@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Tank.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
@@ -24,6 +25,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = 0.33333;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000;
 	
 public:
 
@@ -39,5 +43,6 @@ private:
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector & OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector &WorldDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector &OutHitLocation) const;
 	
 };

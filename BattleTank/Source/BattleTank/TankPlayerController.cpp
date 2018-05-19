@@ -69,7 +69,11 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		// Line-Trace from the current pawn through the position of the crosshair and identify if we hit anything
-		UE_LOG(LogTemp, Warning, TEXT("The de-projected direction is: %s"), *LookDirection.ToString());
+		if (GetLookVectorHitLocation(LookDirection, HitLocation))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("We are hitting: %s"), *HitLocation.ToString());
+		}
+		
 	}
 
 	HitLocation = FVector(1.0);
@@ -84,6 +88,25 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &
 		                                  ScreenLocation.Y,
 		                                  CameraWorldLocation, 
 		                                  LookDirection);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector & OutHitLocation) const
+{
+	FHitResult HitResult;
+	FVector LineTraceStart = PlayerCameraManager->GetCameraLocation();
+	FVector LineTraceEnd = LineTraceStart + LookDirection*LineTraceRange;
+
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		LineTraceStart,
+		LineTraceEnd,
+		ECollisionChannel::ECC_Visibility))
+	{
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+
+	return false;
 }
 
 
