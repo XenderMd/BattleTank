@@ -43,17 +43,16 @@ void ATankPlayerController::AimTowardsCrosshair()
 	
 	FVector HitLocation; // OutParameter
 
+    // Get world location if linetrace through crosshair
 	GetSightRayHitLocation(HitLocation);
 
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect". is going to line trace 
 	{
-		    //UE_LOG(LogTemp, Warning, TEXT("Look direction is: %s"), *HitLocation.ToString())
-			// TODO Tell controlled tank to aim at this point
+		// If it hits landscape
+		   // Tell controlled tank to aim at this point		 
+		GetControlledTank()->AimAt(HitLocation);
 	}
 
-	// Get world location if linetrace through crosshair
-	// If it hits landscape
-	   // Tell controlled tank to aim at this point
 }
 
 // Get World location of linetrace through crosshair, true if hits landscape
@@ -71,13 +70,13 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
 		// Line-Trace from the current pawn through the position of the crosshair and identify if we hit anything
 		if (GetLookVectorHitLocation(LookDirection, HitLocation))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("We are hitting: %s"), *HitLocation.ToString());
+			
+			return true;
 		}
 		
 	}
-
-	HitLocation = FVector(1.0);
-	return true;
+	HitLocation = FVector(0.0);
+	return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const
@@ -106,11 +105,10 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		return true;
 	}
 
+	OutHitLocation = FVector(0.0);
 	return false;
 }
 
-
-//
 ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
