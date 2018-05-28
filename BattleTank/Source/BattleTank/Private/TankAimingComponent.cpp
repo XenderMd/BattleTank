@@ -33,10 +33,16 @@ void UTankAimingComponent::Aim(FVector HitLocation, float LaunchSpeed)
 		0.0,
 		ESuggestProjVelocityTraceOption::DoNotTrace);
 
+
 	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+	}
+	else
+	{
+		auto Time = GetWorld()->GetAudioTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solve not found"), Time);
 	}
 }
 
@@ -48,15 +54,12 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	
-	
 	// translate the AimDirection from FVector to FRotator
 	auto BarelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 
 	// Work-out the difference between the current and the future position
 	auto DeltaRotator = AimAsRotator - BarelRotator;
-
-	//UE_LOG(LogTemp, Warning, TEXT("DeltaRotator is %s"), *DeltaRotator.ToString());
 
 	Barrel->Elevate(5); // TODO Remove magic number
 }
