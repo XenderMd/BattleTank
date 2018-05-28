@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/ActorComponent.h"
 #include "Components/SceneComponent.h"
-#include "Runtime/Engine/Classes/Engine/World.h"
 #include "TankAimingComponent.generated.h"
 
 // Forward declaration

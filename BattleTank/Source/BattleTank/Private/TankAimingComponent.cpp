@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "TankBarrel.h"
 
 
@@ -41,8 +42,8 @@ void UTankAimingComponent::Aim(FVector HitLocation, float LaunchSpeed)
 	}
 	else
 	{
-		auto Time = GetWorld()->GetAudioTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solve not found"), Time);
+		MoveBarrelTowards(FVector(0));
+		UE_LOG(LogTemp, Warning, TEXT("Aim solve not found"));
 	}
 }
 
@@ -61,6 +62,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Work-out the difference between the current and the future position
 	auto DeltaRotator = AimAsRotator - BarelRotator;
 
-	Barrel->Elevate(5); // TODO Remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
 
