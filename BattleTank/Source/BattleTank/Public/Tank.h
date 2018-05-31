@@ -26,7 +26,7 @@ protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.0; // TODO - a research on the actuall speed of the tank shell
+	float LaunchSpeed = 4000.0; // TODO - a research on the actuall speed of the tank shell
 
 
 public:	
@@ -39,6 +39,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret * TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
 
 	void AimAt(FVector HitLocation);
 
