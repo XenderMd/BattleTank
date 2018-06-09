@@ -10,7 +10,7 @@
 /**
  *  Is used to set the maximum driving force, and apply forces to the tank
  */
-UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
+UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 {
 	GENERATED_BODY()
