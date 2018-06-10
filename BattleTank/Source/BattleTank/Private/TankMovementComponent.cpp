@@ -11,12 +11,21 @@ void UTankMovementComponent::Initialise(UTankTracks *LeftTrackToSet, UTankTracks
 	RightTrack = RightTrackToSet;
 }
 
-void UTankMovementComponent::IntendMoveForward(float Throw)
+void UTankMovementComponent::IntendMoveStraight(float Throw)
 {
-	//auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("Intend move foward throw: %f"), Throw);
-
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
+}
+
+void UTankMovementComponent::IntendTurnLeft(float Throw)
+{
+	LeftTrack->SetThrottle(-Throw);
+	RightTrack->SetThrottle(Throw);
+}
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
 }
 

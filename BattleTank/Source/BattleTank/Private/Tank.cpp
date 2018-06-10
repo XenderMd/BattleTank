@@ -43,13 +43,20 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (!Barrel) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Invalid Barrel reference"));
+		return;
+	}
 	if (Barrel && isReloaded)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile")));
-
-		Projectile->LaunchProjectile(LaunchSpeed);
+		if (Projectile)
+		{Projectile->LaunchProjectile(LaunchSpeed);}
+		else
+		{ UE_LOG(LogTemp, Warning, TEXT("Invalid Projectile reference"));}
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
