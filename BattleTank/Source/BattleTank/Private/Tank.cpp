@@ -66,3 +66,8 @@ void ATank::AimAt(FVector HitLocation)
 	TankAimingComponent->Aim(HitLocation, LaunchSpeed);
 }
 
+void ATank::SetMovementComponentReference(UTankMovementComponent * MovementComponentReference)
+{
+	TankMovementComponent = MovementComponentReference;
+}
+

@@ -45,6 +45,7 @@ private:
 
 protected:
 
+	//Component not required however - it spawned directly in UE and works independently (in parallel) from the Tank class code.  
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent *TankMovementComponent = nullptr;
 	UTankAimingComponent * TankAimingComponent = nullptr;
@@ -64,4 +65,8 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	// Function created only to maintain consistency - since we have a TankMovementComponent pointer. It is set to the Movement Component from the Tank_BP.
+	// Not required however as well - can be removed together with the pointer
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetMovementComponentReference(UTankMovementComponent *MovementComponentReference);
 };
