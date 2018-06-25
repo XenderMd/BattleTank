@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+//Copyright EnderIT Ltd.
 
 #include "TankAimingComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -16,6 +16,11 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::Aim(FVector HitLocation, float LaunchSpeed)
 {
@@ -49,14 +54,14 @@ void UTankAimingComponent::Aim(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
+UTankBarrel * UTankAimingComponent::GetBarrelReference()
 {
-	Barrel = BarrelToSet;
+	return Barrel;
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+UTankTurret * UTankAimingComponent::GetTurretReference()
 {
-	Turret = TurretToSet;
+	return Turret;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)

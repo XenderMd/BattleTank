@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright EnderIT Ltd.
 
 #pragma once
 
@@ -33,16 +33,21 @@ protected:
 	UTankTurret *Turret = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
-
+	
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+	EFiringState FiringState = EFiringState::Locked;
+
 
 public:	
 
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
+
 	void Aim(FVector HitLocation, float LaunchSpeed);
-	void SetBarrelReference(UTankBarrel  * BarrelToSet);
-	void SetTurretReference(UTankTurret  * TurretToSet);
+
+	UTankBarrel *GetBarrelReference();
+	UTankTurret *GetTurretReference();
 };

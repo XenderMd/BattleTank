@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright EnderIT Ltd.
 
 #pragma once
 
@@ -32,12 +32,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.0;
 
-	//Local Barrel reference for spawning projectiles
-	UTankBarrel *Barrel=nullptr;
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -49,26 +43,21 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent *TankMovementComponent = nullptr;
 
+public:	
+
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
-
-public:	
-
-	
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel * BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret * TurretToSet);
-
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
-
-	void AimAt(FVector HitLocation);
 
 	// Function created only to maintain consistency - since we have a TankMovementComponent pointer. It is set to the Movement Component from the Tank_BP.
 	// Not required however as well - can be removed together with the pointer
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetMovementComponentReference(UTankMovementComponent *MovementComponentReference);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetAimingComponentReference(UTankAimingComponent *AimingComponentReference);
+
+	void AimAt(FVector HitLocation);
 };
