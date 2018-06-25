@@ -48,6 +48,8 @@ protected:
 	//Component not required however - it spawned directly in UE and works independently (in parallel) from the Tank class code.  
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent *TankMovementComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
 

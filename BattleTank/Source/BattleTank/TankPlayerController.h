@@ -30,10 +30,13 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
-	
-public:
 
+protected:
+	
+	UFUNCTION (BlueprintCallable, Category = "Setup")
 	ATank *GetControlledTank() const;
+
+public:
 
 	virtual void BeginPlay() override;
 
