@@ -33,28 +33,12 @@ void ATank::Fire()
 	if (isReloaded)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBluePrint,
-			TankAimingComponent->GetBarrelReference()->GetSocketLocation(FName("Projectile")),
-			TankAimingComponent->GetBarrelReference()->GetSocketRotation(FName("Projectile")));
+			FindComponentByClass<UTankAimingComponent>()->GetBarrelReference()->GetSocketLocation(FName("Projectile")),
+			FindComponentByClass<UTankAimingComponent>()->GetBarrelReference()->GetSocketRotation(FName("Projectile")));
 		if (Projectile)
-		{Projectile->LaunchProjectile(LaunchSpeed);}
+		{Projectile->LaunchProjectile(FindComponentByClass<UTankAimingComponent>()->LaunchSpeed);}
 		else
 		{ UE_LOG(LogTemp, Warning, TEXT("Invalid Projectile reference"));}
 		LastFireTime = FPlatformTime::Seconds();
 	}
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!TankAimingComponent) { return; }
-	TankAimingComponent->Aim(HitLocation, LaunchSpeed);
-}
-
-void ATank::SetMovementComponentReference(UTankMovementComponent * MovementComponentReference)
-{
-	TankMovementComponent = MovementComponentReference;
-}
-
-void ATank::SetAimingComponentReference(UTankAimingComponent * AimingComponentReference)
-{
-	TankAimingComponent = AimingComponentReference;
 }

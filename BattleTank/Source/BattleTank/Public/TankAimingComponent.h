@@ -37,16 +37,18 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Locked;
 
-
 public:	
 
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000.0;
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
-	void Aim(FVector HitLocation, float LaunchSpeed);
+	void Aim(FVector HitLocation);
 
 	UTankBarrel *GetBarrelReference();
 	UTankTurret *GetTurretReference();
