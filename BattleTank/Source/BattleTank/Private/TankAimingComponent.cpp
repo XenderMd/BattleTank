@@ -16,6 +16,22 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	if (!((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds))
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if (IsRotating)
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
+}
+
 
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
@@ -83,6 +99,15 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	
+	if (Barrel->GetForwardVector().Equals(AimDirection, 0.05))
+	{
+		IsRotating = false;
+	}
+	else
+	{
+		IsRotating = true;
+	}
+
 	// Work-out the difference between the current and the future position
 	auto DeltaRotator = AimAsRotator - TurretRotator;
 

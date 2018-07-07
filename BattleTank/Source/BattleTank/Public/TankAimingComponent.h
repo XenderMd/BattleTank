@@ -28,6 +28,11 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+	
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+	bool IsRotating = false;
+
 protected:
 	
 	UTankBarrel *Barrel=nullptr;
