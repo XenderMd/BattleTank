@@ -14,9 +14,24 @@ UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 {
 	GENERATED_BODY()
+
+private:
 	
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	//Delegate for the OnComponentHit event -> when tracks are touching the ground 
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
+
+	//FComponentHitSignature, UPrimitiveComponent*, HitComponent, AActor*, OtherActor, UPrimitiveComponent*, OtherComp, FVector, NormalImpulse, const FHitResult&, Hit
 	
 public:
+
+	UTankTracks();
+
+	virtual void OnRegister() override;
 	
 	// Sets a throttle between -1 and + 1
 	UFUNCTION(BlueprintCallable, Category=Input)

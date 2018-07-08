@@ -43,7 +43,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	GetSightRayHitLocation(HitLocation);
 
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect". is going to line trace 
-	{	 
+	{	
+		if (!ensure(GetPawn())) { return; }
 		GetPawn()->FindComponentByClass<UTankAimingComponent>()->Aim(HitLocation);
 	}
 }
