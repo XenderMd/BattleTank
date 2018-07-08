@@ -21,6 +21,10 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	void ApplySidewaysForce();
+
+	float CurrentThrottle = 0.0;
+
 	//Delegate for the OnComponentHit event -> when tracks are touching the ground 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
@@ -36,6 +40,8 @@ public:
 	// Sets a throttle between -1 and + 1
 	UFUNCTION(BlueprintCallable, Category=Input)
 	void SetThrottle(float Throttle);
+
+	void DriveTrack(float Throttle);
 	
 	//Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly)

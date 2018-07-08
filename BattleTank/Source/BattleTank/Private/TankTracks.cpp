@@ -15,7 +15,11 @@ void UTankTracks::BeginPlay()
 
 void UTankTracks::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit event is fired"))
+
+	DriveTrack(CurrentThrottle);
+	ApplySidewaysForce();
+	CurrentThrottle = 0.0;
+
 }
 
 // Bug Fix - since we removed previously the TickComponent, we had to explicitly Register this component again, to enable the Ticking (Lessons Q&A)
@@ -29,6 +33,11 @@ void UTankTracks::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+}
+
+void UTankTracks::ApplySidewaysForce()
+{
+	auto DeltaTime = GetWorld()->GetTimeSeconds();
 	auto TankVelocity = GetOwner()->GetVelocity();
 	auto TankSideMove = GetOwner()->GetActorRightVector();
 	auto SlippageSpeed = FVector::DotProduct(TankVelocity, TankSideMove);
@@ -43,12 +52,15 @@ void UTankTracks::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 void UTankTracks::SetThrottle(float Throttle)
 {
 	
-	//TODO - clamp the throttle values so that the player cannot overdrive
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -2.0, 2.0);
+}
+
+void UTankTracks::DriveTrack(float Throttle)
+{
 	auto ForceApplied = GetForwardVector()*Throttle*TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
 }
 
 
