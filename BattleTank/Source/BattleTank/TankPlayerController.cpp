@@ -40,7 +40,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // OutParameter
 
     // Get world location if linetrace through crosshair
-	GetSightRayHitLocation(HitLocation);
+	//GetSightRayHitLocation(HitLocation);
 
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect". is going to line trace 
 	{	
@@ -62,11 +62,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		// Line-Trace from the current pawn through the position of the crosshair and identify if we hit anything
-		if (GetLookVectorHitLocation(LookDirection, HitLocation))
-		{
-			
-			return true;
-		}
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 		
 	}
 	HitLocation = FVector(0.0);
