@@ -14,7 +14,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo,
 };
 
 // Forward declaration
@@ -45,6 +46,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.0;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	int Rounds = 3;
 
 	float LastFireTime = 0;
 
@@ -54,19 +58,22 @@ public:
 	UTankAimingComponent();
 	
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0;
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
 	void Aim(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
 	UTankBarrel *GetBarrelReference();
 	UTankTurret *GetTurretReference();
+	
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 };
