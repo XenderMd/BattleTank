@@ -120,7 +120,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	// Work-out the difference between the current and the future position
 	auto DeltaRotator = AimAsRotator - TurretRotator;
 
-	if (DeltaRotator.Yaw <= 180)
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
 	{
 		Turret->Rotate(DeltaRotator.Yaw);
 	}

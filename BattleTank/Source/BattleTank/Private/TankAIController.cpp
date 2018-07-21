@@ -6,7 +6,6 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 
@@ -16,9 +15,12 @@ void ATankAIController::Tick(float DeltaTime)
 	auto *ControlledTank = GetPawn();
 	auto *PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-		if (ensure(PlayerTank && PlayerTank))
+		if (ensure(PlayerTank && ControlledTank))
 		{
-			MoveToActor(PlayerTank, AcceptanceRadius); // TODO Check the radius is in cm
+			if (! (GetPawn()->GetName().Find("AutoMortar") >= 0) )
+			{
+				MoveToActor(PlayerTank, AcceptanceRadius);
+			}
 
 			ControlledTank->FindComponentByClass<UTankAimingComponent>()->Aim(PlayerTank->GetActorLocation());
 
