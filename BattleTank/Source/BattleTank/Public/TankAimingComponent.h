@@ -44,12 +44,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadTimeInSeconds = 3.0;
-	
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	int Rounds = 3;
-
 	float LastFireTime = 0;
 
 public:	
@@ -63,6 +57,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 Rounds = 3;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
@@ -75,5 +75,5 @@ public:
 	UTankTurret *GetTurretReference();
 	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
 };

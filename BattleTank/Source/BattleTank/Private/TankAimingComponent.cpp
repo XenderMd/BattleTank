@@ -85,7 +85,7 @@ UTankTurret * UTankAimingComponent::GetTurretReference()
 	return Turret;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return Rounds;
 }
