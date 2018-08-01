@@ -16,6 +16,7 @@ class BATTLETANK_API AProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
+	void LaunchProjectile(float LaunchSpeed);
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,11 +28,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UParticleSystemComponent *LaunchBlast= nullptr;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	void LaunchProjectile(float LaunchSpeed);
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	UParticleSystemComponent *ImpactBlast = nullptr;
 
 private:
 	UProjectileMovementComponent *ProjectileMovement = nullptr;
+	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
 };
