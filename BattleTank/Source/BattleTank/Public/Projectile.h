@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include"Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -30,6 +31,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UParticleSystemComponent *ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	URadialForceComponent *ExplosionForce = nullptr;
 
 private:
 	UProjectileMovementComponent *ProjectileMovement = nullptr;
