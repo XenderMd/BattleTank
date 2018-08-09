@@ -6,6 +6,7 @@
 #include"Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
@@ -19,12 +20,18 @@ public:
 	AProjectile();
 	void LaunchProjectile(float LaunchSpeed);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Timing")
+	float DestroyDelay = 2.0;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY (VisibleAnywhere, Category = "Component")
 	UStaticMeshComponent *CollisionMesh= nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	UStaticMeshComponent *Sphere = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UParticleSystemComponent *LaunchBlast= nullptr;
@@ -40,4 +47,5 @@ private:
 	
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
+	void DestroyProjectile();
 };

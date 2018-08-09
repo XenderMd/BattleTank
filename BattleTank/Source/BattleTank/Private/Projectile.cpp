@@ -14,6 +14,9 @@ AProjectile::AProjectile()
 	CollisionMesh->SetNotifyRigidBodyCollision(true);
 	CollisionMesh->SetVisibility(false);
 
+	Sphere = CreateDefaultSubobject<UStaticMeshComponent>(FName("Sphere"));
+	Sphere->AttachToComponent(CollisionMesh, FAttachmentTransformRules::KeepRelativeTransform);
+
 
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -41,6 +44,17 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	Sphere->DestroyComponent();
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::DestroyProjectile, DestroyDelay, false);
+
+}
+
+void AProjectile::DestroyProjectile()
+{
+	this->Destroy();
 }
 
 void AProjectile::LaunchProjectile(float LaunchSpeed)
