@@ -6,6 +6,7 @@
 #include"Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -20,8 +21,11 @@ public:
 	AProjectile();
 	void LaunchProjectile(float LaunchSpeed);
 
-	UPROPERTY(EditDefaultsOnly, Category = "Timing")
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 2.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage;
 
 protected:
 	// Called when the game starts or when spawned

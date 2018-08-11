@@ -22,3 +22,14 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+//Called by the engine everytime when an ApplyDamage event was fired (in this case, the ApplyRadialDamage is fired from the Projectile)
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	DamagePoints = FMath::Clamp(DamagePoints, 0, CurrentHealth);
+	CurrentHealth = CurrentHealth - DamagePoints;
+
+	UE_LOG(LogTemp, Warning, TEXT("The damage received is: %d"), CurrentHealth);
+	return DamageAmount;
+}
