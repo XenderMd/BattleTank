@@ -33,4 +33,7 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor* DamageCauser) override;
+	
+	UFUNCTION (BlueprintPure, Category="Health")
+	float GetHealthPercent();
 };
