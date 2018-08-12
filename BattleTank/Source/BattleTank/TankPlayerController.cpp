@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 
 
 void ATankPlayerController::BeginPlay()
@@ -18,6 +19,17 @@ void ATankPlayerController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController cannot find the TankAimingComponent at BeginPlay!"))
 	}
 
+}
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -39,8 +51,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 	
 	FVector HitLocation; // OutParameter
 
-    // Get world location if linetrace through crosshair
-	//GetSightRayHitLocation(HitLocation);
 
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect". is going to line trace 
 	{	
@@ -97,4 +107,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 
 	OutHitLocation = FVector(0.0);
 	return false;
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("My Tank died!!!"))
 }

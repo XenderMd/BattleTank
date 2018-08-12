@@ -45,6 +45,11 @@ public:
 
 private:
 
+	UFUNCTION()
+	void OnTankDeath();
+
+	virtual void SetPawn(APawn *InPawn) override;
+
 	// Moves the barel of the tank towards the crosshair
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector & OutHitLocation) const;

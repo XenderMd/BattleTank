@@ -17,11 +17,17 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
     private :
+
+		// How close the AE tank get to the player
+		float AcceptanceRadius = 3000.0;
 		
 		virtual void BeginPlay() override;
 
 		virtual void Tick(float DeltaTime) override;
 
-		// How close the AE tank get to the player
-		float AcceptanceRadius = 3000.0;
+		virtual void SetPawn(APawn *InPawn) override;
+
+		UFUNCTION()
+		void OnTankDeath();
+
 };
