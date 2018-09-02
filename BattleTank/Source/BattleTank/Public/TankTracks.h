@@ -17,20 +17,12 @@ class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 
 private:
 	
+	TArray< class ASprungWheel *> GetWheels() const;
+
 	virtual void BeginPlay() override;
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
-	void ApplySidewaysForce();
-
-	float CurrentThrottle = 0.0;
-
-	//Delegate for the OnComponentHit event -> when tracks are touching the ground 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
-
-	//FComponentHitSignature, UPrimitiveComponent*, HitComponent, AActor*, OtherActor, UPrimitiveComponent*, OtherComp, FVector, NormalImpulse, const FHitResult&, Hit
-	
 public:
 
 	UTankTracks();

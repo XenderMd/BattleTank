@@ -17,15 +17,15 @@ public:
 	// Sets default values for this actor's properties
 	ASprungWheel();
 
+	void AddDrivingForce(float ForceMagnitude);
+
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void SetupConstraint();
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 private:
 
@@ -40,6 +40,4 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UPhysicsConstraintComponent *AxleWheelConstraint = nullptr;
-
-
 };
