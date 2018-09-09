@@ -28,6 +28,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 		virtual void SetPawn(APawn *InPawn) override;
 
 		UFUNCTION()
-		void OnTankDeath();
+		void OnPawnDeath();
 
 };

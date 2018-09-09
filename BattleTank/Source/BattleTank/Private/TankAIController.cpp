@@ -2,6 +2,7 @@
 
 #include "TankAIController.h"
 #include "TankAimingComponent.h"
+#include "AutoMortar.h"
 #include"Tank.h"
 
 void ATankAIController::BeginPlay()
@@ -25,7 +26,10 @@ void ATankAIController::Tick(float DeltaTime)
 
 			ControlledTank->FindComponentByClass<UTankAimingComponent>()->Aim(PlayerTank->GetActorLocation());
 
-			ControlledTank->FindComponentByClass<UTankAimingComponent>()->Fire();
+			if (ControlledTank->FindComponentByClass<UTankAimingComponent>()->FiringState == EFiringState::Locked)
+			{
+				ControlledTank->FindComponentByClass<UTankAimingComponent>()->Fire();
+			}
 		}
 		else { return; }
 	}
@@ -35,13 +39,14 @@ void ATankAIController::SetPawn(APawn * InPawn)
 	Super::SetPawn(InPawn);
 	if (InPawn)
 	{
-		auto PossessedTank = Cast<ATank>(InPawn);
-		if (!PossessedTank) { return; }
-		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnTankDeath);
+		auto PossessedTank = Cast<ATank>(InPawn);		
+		auto PossessedMortar = Cast<AAutoMortar>(InPawn);
+		if (PossessedTank) {PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPawnDeath);}
+		if (PossessedMortar) {PossessedMortar->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPawnDeath);}
 	}
 }
 
-void ATankAIController::OnTankDeath()
+void ATankAIController::OnPawnDeath()
 {
 	GetPawn()->DetachFromControllerPendingDestroy();
 }
